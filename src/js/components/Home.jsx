@@ -1,26 +1,39 @@
-import React from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import { useState } from "react";
 
 //create your first component
 const Home = () => {
+	const [todoList, setTodoList] = useState([])
+	const [inputValue, setInputValue] = useState([""])
+	function handleSubmit(e) {
+		e.preventDefault()
+
+		const newTask = {
+			label: inputValue,
+			is_done: false
+		}
+		setTodoList([...todoList, newTask]);
+		setInputValue(""); // Limpiar el input después de agregar la tarea
+
+
+
+	}
+
+
+
+
+
 	return (
 		<div className="text-center">
-            
-
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+			<h1>To Do List</h1>
+			<div>
+				<form>
+					<input type="text" value={inputValue} onChange={(e) => { setInputValue(e.target.value) }} />
+					
+				</form>
+				<div>
+					{/* Aquí renderizamos la lista */}
+				</div>
+			</div>
 		</div>
 	);
 };
