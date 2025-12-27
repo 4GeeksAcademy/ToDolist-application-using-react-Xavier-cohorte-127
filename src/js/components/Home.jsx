@@ -1,39 +1,41 @@
 import { useState } from "react";
 
-//create your first component
 const Home = () => {
-	const [todoList, setTodoList] = useState([])
-	const [inputValue, setInputValue] = useState([""])
+	const [todoList, setTodoList] = useState([]);
+	const [inputValue, setInputValue] = useState("");
+
 	function handleSubmit(e) {
-		e.preventDefault()
+		e.preventDefault(); // evita recarga
 
-		const newTask = {
-			label: inputValue,
-			is_done: false
-		}
-		setTodoList([...todoList, newTask]);
-		setInputValue(""); // Limpiar el input después de agregar la tarea
+		if (inputValue.trim() === "") return; // evita tareas vacías
 
-
-
+		setTodoList([...todoList, inputValue]);
+		setInputValue(""); // limpia el input
 	}
 
-
-
-
-
 	return (
-		<div className="text-center">
+		<div className="container mt-5"> 
 			<h1>To Do List</h1>
-			<div>
-				<form>
-					<input type="text" value={inputValue} onChange={(e) => { setInputValue(e.target.value) }} />
-					
-				</form>
-				<div>
-					{/* Aquí renderizamos la lista */}
-				</div>
-			</div>
+
+			{/* FORM */}
+			<form onSubmit={handleSubmit}>
+				<input
+					type="text"
+					className="form-control"
+					placeholder="Escribe una tarea y pulsa Enter"
+					value={inputValue}
+					onChange={(e) => setInputValue(e.target.value)}
+				/>
+			</form>
+
+			{/* LISTA */}
+			<ul className="list-group mt-3">
+				{todoList.map((task, index) => (
+					<li key={index} className="list-group-item">
+						{task}
+					</li>
+				))}
+			</ul>
 		</div>
 	);
 };
